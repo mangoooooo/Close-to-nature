@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/**** img list ****/
+.pic_list_wrap {
+    width: 400px;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+
+ul.pics_list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.pics_list li {
+    float: left;
+}
+
+.pics_list li img{
+    vertical-align: middle;     /* 解决 图片下方有条空隙的问题*/
+}
+
+
+
+
+.arrow-btn {
+    width: 40px;
+    height: 50px;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    text-align: center;
+    line-height: 50px;
+    color: #ffffff;
+    top: 160px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+
+
+
+.buttons-wrap {
+    width: 400px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.btn_list {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.btn_list li{
+    float: left;
+    height: 15px;
+    width: 15px;
+    background: #cccccc;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.btn_list li.active {
+    background: rgb(233, 139, 139);
+}
