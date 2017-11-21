@@ -11,6 +11,7 @@ var liWidth = 400;
 var ulWidth = 0;
 var index   = 0;
 var loop    = true;
+var auto    = true;
 var timer   = null;
 var seconds = 2000;
 
@@ -28,7 +29,6 @@ if (loop) {
 ulWidth = imgLi.length * liWidth;
 imgUl.style.width = ulWidth + 'px';  //  使得ul够宽
 
-autoPlay()
 
 prevBtn.addEventListener('click', function () {
     if (!loop && index == 0) {
@@ -55,33 +55,45 @@ btnUl.addEventListener('click', function (e) {
     var target = event.target || event.srcElement;
 
     if (target.tagName == 'LI' && target.className == '') {
-        index = target.getAttribute('data-index');
-        buttonShow()
+        stop();
+
+        var attrIndex = target.getAttribute('data-index');
+        var offset    = (index - attrIndex) * liWidth;
+
+        index = attrIndex;
+        animate(offset);
+        buttonShow();
     }
 }, false)
 
-listWrap.addEventListener('mouseover', stop, false)
 
-listWrap.addEventListener('mouseout', autoPlay, false)
+
+if (auto) {
+    autoPlay();
+    listWrap.addEventListener('mouseover', stop, false);
+    listWrap.addEventListener('mouseout', autoPlay, false);
+    btnUl.addEventListener('mouseout', autoPlay, false);
+}
+
 
 function buttonShow () {
     if (loop && index > imgLi.length - 3) {
-        index = 0
+        index = 0;
     }
     if (index < 0) {
-        index = imgLi.length - 3
+        index = imgLi.length - 3;
     }
 
     for (var i = 0, len = btnLi.length; i < len; i++) {
         btnLi[i].className = '';
     }
 
-    btnLi[index].className = 'active'
+    btnLi[index].className = 'active';
 }
 
 function animate (offset) {
     if (loop && ulLeft == 0) {
-        ulLeft = -(liWidth * (imgLi.length - 2))
+        ulLeft = -(liWidth * (imgLi.length - 2));
     }
 
     if (loop && ulLeft == -(liWidth * (imgLi.length - 1))) {
@@ -99,7 +111,7 @@ function autoPlay () {
     }
 
     timer = setInterval(function () {
-        nextBtn.click()
+        nextBtn.click();
     }, seconds)
 }
 
