@@ -1,3 +1,4 @@
+var listWrap = document.getElementsByClassName('pic_list_wrap')[0];
 var imgUl   = document.getElementsByTagName('ul')[0];
 var imgLi   = imgUl.getElementsByTagName('li');
 var prevBtn = document.getElementsByClassName('prev')[0];
@@ -9,7 +10,9 @@ var ulLeft  = parseInt(imgUl.style.left) || 0;
 var liWidth = 400;
 var ulWidth = 0;
 var index   = 0;
-var loop    = false;
+var loop    = true;
+var timer   = null;
+var seconds = 2000;
 
 if (loop) {
     var choneFirst = imgLi[0].cloneNode(true);
@@ -24,6 +27,8 @@ if (loop) {
 
 ulWidth = imgLi.length * liWidth;
 imgUl.style.width = ulWidth + 'px';  //  使得ul够宽
+
+autoPlay()
 
 prevBtn.addEventListener('click', function () {
     if (!loop && index == 0) {
@@ -55,6 +60,10 @@ btnUl.addEventListener('click', function (e) {
     }
 }, false)
 
+listWrap.addEventListener('mouseover', stop, false)
+
+listWrap.addEventListener('mouseout', autoPlay, false)
+
 function buttonShow () {
     if (loop && index > imgLi.length - 3) {
         index = 0
@@ -82,4 +91,23 @@ function animate (offset) {
 
     ulLeft += offset;
     imgUl.style.left = ulLeft + 'px';
+}
+
+function autoPlay () {
+    if (timer) {
+        return false;
+    }
+
+    timer = setInterval(function () {
+        nextBtn.click()
+    }, seconds)
+}
+
+function stop () {
+    if (!timer) {
+        return false;
+    }
+    
+    clearInterval(timer);
+    timer = null;
 }
