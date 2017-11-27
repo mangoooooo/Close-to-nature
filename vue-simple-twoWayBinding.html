@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <div id="username"></div>
+
+    <script>
+        var input = document.getElementById('name');
+        var div   = document.getElementById('username');
+
+        var obj = {};
+        Object.defineProperty(obj, 'name', {
+            get: function () {
+                console.log('get init');
+            },
+            set: function (value) {     //  step3：触发set函数
+                // console.log('set init:' + value);
+                div.innerText = value;      //  step4：改变div的innerText
+                input.value = value;        //  step5：实现在控制台改变obj.name的值 dom的值也发生改变
+            }
+        })
+
+        // obj.name = 'jlt';       //  set 函数触发
+        // console.log(obj.name);  //  get 函数触发
+
+        //  step1: 添加事件监听
+        input.addEventListener('keyup', function (event) {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+
+            // div.innerText = target.value;
+            obj.name = target.value;        //  step2：改变obj的name值
+
+        }, false)
+    </script>
+</body>
+</html>
