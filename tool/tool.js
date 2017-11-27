@@ -232,8 +232,8 @@ function drag(elem) {
 
         addEvent(document, 'mousemove', moveHandle);
         addEvent(document, 'mouseup', function (e) {
-        removeEvent(document, 'mousemove', moveHandle)
-        removeEvent(document, 'mouseup', moveHandle)
+            removeEvent(document, 'mousemove', moveHandle)
+            removeEvent(document, 'mouseup', moveHandle)
         })
 
         stopBubble(event);
