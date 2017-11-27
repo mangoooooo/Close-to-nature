@@ -260,13 +260,13 @@ function loadScript(src, callback) {
     if (script.readyState) {
         script.onreadystatechange = function () {
             if (script.readyState == 'complete' || script.readyState == "loaded") {
-                callback();
+                callback && callback();
             }
         }
 
     } else {
         script.onload = function () {
-            callback();
+            callback && callback();
         }
 
     }
