@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 变量的作用域就是它所在的选择器的有效范围 */
+        /* 大小写敏感 */
+        body {
+            --main-color: red;
+            --header-height: 50px;
+            --base-line-height: 1.428571429;
+            --bar:  'world';	
+        }
+
+        span {
+            display: block;
+        }
+
+        /* 变量读取和默认值 */
+        span.a1 {
+            color: var(--main-color, green);
+        }
+
+        /* 字符串拼接 */
+        span.a2:after {
+            content:  'hello 'var(--bar);
+        }
+
+        /* 变量是数值 */
+        /*** 错误写法 ***/
+        span {
+            --gap: 20;
+            margin-top: var(--gap)px;
+        }
+        /**** 正确写法 ****/
+        span.a3 {
+            --gap: 20;
+            margin-top: calc(var(--gap) * 1px);
+        }
+
+        /* 变量是单位 不能写成字符串*/
+        /*** 错误写法 ***/
+        span {
+            --gap: '20px';
+            margin-top: var(--gap);
+        }
+        /**** 正确写法 ****/
+        span.a4 {
+            --gap: 20px;
+            margin-top: var(--gap);
+        }
+
+        /* 是否支持变量 */
+        @supports ( (--a: 0)) {
+
+        }
+        @supports ( not (--a: 0)) {
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <span class="a1">a1</span>
+        <span class="a2">a2</span>
+        <span class="a3">a3</span>
+        <span class="a4">a4</span>
+    </div>
+
+    <script>
+        // 是否支持css变量
+        const isSupported = window.CSS && window.CSS.supports && window.CSS.supports('--a', 0);
+        console.log('是否支持css变量：' + isSupported);
+
+        //	操作css变量---只操作行内样式，对内部样式表 外部样式表 无效
+        ////设置变量
+        document.body.style.setProperty('--main-color', 'yellow');
+        ////读取变量
+        console.log(document.body.style.getPropertyValue('--main-color'));
+        ////删除变量
+        document.body.style.removeProperty('--main-color');
+    </script>
+</body>
+</html>
