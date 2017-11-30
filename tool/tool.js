@@ -146,6 +146,7 @@ function getEleByClass(parent, classname) {
     var rs = [];
 
     for (var i = 0, len = childEle.length; i < len; i ++) {
+        //  todo: String match
         var classArr = childEle[i].className ? childEle[i].className.split(' ') : 0
         if (!classArr) {
             break;

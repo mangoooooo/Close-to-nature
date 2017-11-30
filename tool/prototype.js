@@ -11,7 +11,7 @@ Element.prototype.insertAfter = function(target, after) {
 */
 Array.prototype.unique = function () {
     if (typeof Set == 'function') {
-        return Array.from(new Set(arr))
+        return Array.from(new Set(this))
     }
     
     var arr = [];
