@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    color: #333333;
+}
+.wrap {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.list {
+    flex: 1;
+    overflow: auto;
+}
+
+ul li {
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    border: 1px solid #dedede;
+    cursor: pointer;
+}
+
+.footer {
+    padding: 8px 10px;
+    text-align: center;
+    background-color: antiquewhite;
+}
