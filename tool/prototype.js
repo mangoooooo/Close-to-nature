@@ -19,13 +19,13 @@ Array.prototype.unique = function () {
     var len = this.length;
     
     for (var i = 0; i < len; i++) {
-    var j = this[i];
-    var type = typeof j;
+        var j = this[i];
+        var type = typeof j;
 
-    if (!(obj[j + type])) {
-        obj[j + type] = j;
-        arr.push(j);
-    }
+        if (!(obj[j + type])) {
+            obj[j + type] = j;
+            arr.push(j);
+        }
     }
 
     return arr;

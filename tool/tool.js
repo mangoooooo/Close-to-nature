@@ -290,7 +290,7 @@ function splitNum(num, size) {
 /**
  * 深度克隆
  */
-function clone(obj) {
+function deepClone(obj) {
     var o;
     switch (typeof obj) {
         case "undefined":
@@ -325,4 +325,125 @@ function clone(obj) {
             o = obj;
     }
     return o;
+}
+
+/**
+ * 对象克隆
+ * @param obj
+ * @returns {*}
+ */
+function cloneObj (obj) {
+    var str = '';
+    var newobj = obj.constructor === Array ? [] : {};
+
+    try {
+        str    = JSON.stringify(obj);
+        newobj = JSON.parse(str);
+    } catch (err) {
+
+    }
+
+    return newobj;
+}
+
+/**
+ * 显示文件大小
+ * @param size
+ * @returns {*}
+ */
+function getFileSize (size){
+    var g = Math.pow(1024, 3);
+    var m = Math.pow(1024, 2);
+    var k = Math.pow(1024, 1);
+
+    if (size > g) {
+        size = (size / g).toFixed(2) + 'G';
+    } else if (size > m) {
+        size = (size / m).toFixed(2) + 'M';
+    } else if (size > k) {
+        size = (size / k).toFixed(2) + 'K';
+    } else {
+        size = size + 'B';
+    }
+
+    return size;
+}
+
+//判断当前是否是移动端
+function browserRedirect (callback) {
+    var sUserAgent  = navigator.userAgent.toLowerCase();
+    var bIsIpad     = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp     = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7      = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc       = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid  = sUserAgent.match(/android/i) == "android";
+    var bIsCE       = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM       = sUserAgent.match(/windows mobile/i) == "windows mobile";
+
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        callback("phone");
+    } else {
+        callback("pc");
+    }
+}
+
+/**
+ * 编码HTML
+ * @param str
+ * @returns {*}
+ */
+function encodeHtmlStr (str) {
+    var replaceRule = [
+        {
+            symbol: '&',
+            html: '&amp;'
+        },
+        //下述方法有问题,字符串中如有空格,会多加空格
+        //white-space: pre-wrap; 能实现同样效果,并支持ie9, 故注释掉
+        // {
+        //     symbol: '[\\u0020]',
+        //     html: '&nbsp;\u0020'
+        // },
+        {
+            symbol: '[\\u0009]',
+            html: '&nbsp;&nbsp;&nbsp;&nbsp;\u0020'
+        },
+        {
+            symbol: '<',
+            html: '&lt;'
+        },
+        {
+            symbol: '>',
+            html: '&gt;'
+        },
+        {
+            symbol: '"',
+            html: '&quot;'
+        },
+        {
+            symbol: '\'',
+            html: '&#39;'
+        },
+        {
+            symbol: '\\n\\r',
+            html: '<br/>'
+        },
+        {
+            symbol: '\\r\\n',
+            html: '<br/>'
+        },
+        {
+            symbol: '\\n',
+            html: '<br/>'
+        }
+    ];
+
+    for (var i = 0, len = replaceRule.length; i < len; i++) {
+        var rule = replaceRule[i];
+        var regExp = new RegExp(rule.symbol, 'g');
+        str = str.replace(regExp, rule.html);
+    }
+
+    return str;
 }
