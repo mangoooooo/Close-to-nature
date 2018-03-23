@@ -2,7 +2,7 @@
  * 固话校验
  */
 function isTelephone (str) {
-    return  /^([0-9]{3,4}[-\\s])?[0-9]{7,8}$/.test(str);
+    return  /^([0-9]{3,4}([-\s])?)?[0-9]{7,8}$/.test(str);
 }
 
 /**
@@ -53,4 +53,29 @@ function ValidateIPaddress (ipaddress) {
         return true;
     }
     return false;
+}
+
+/**
+ * 当前环境是否支持webp格式的图片
+ * @param successCallBack
+ */
+function supportWebP (successCallBack) {
+    var isSupport = false
+
+    const img = new Image()
+    img.onload = function () {
+        isSupport = true
+        successCallBack && successCallBack(isSupport)
+    }
+    img.src = 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAsAAAABBxAREYiI/gcAAABWUDggGAAAADABAJ0BKgEAAQABABwlpAADcAD+/gbQAA=='
+}
+
+/**
+ * 邮箱校验
+ * @param str
+ * @returns {boolean}
+ */
+function isEmail (str) {
+    var reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
+    return reg.test(str)
 }

@@ -31,3 +31,21 @@ Array.prototype.unique = function () {
     return arr;
 
 }
+
+/**
+ * 不管reject还是resolve 都能在Promise.almost([..]).then(values => {}) 中获取
+ * Promise.almost = r => Promise.all(r.map(p => p.catch ? p.catch(e => e) : p));
+  */
+if (Promise) {
+    Promise.prototype.almost = function (r) {
+        return Promise.all(r.map(function (p) {
+            if (p.catch) {
+                return p.catch(function (e) {
+                    return e
+                })
+            }
+
+            return p
+        }))
+    }
+}
