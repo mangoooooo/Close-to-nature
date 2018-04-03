@@ -9,7 +9,7 @@ function isTelephone (str) {
  * 移动电话校验
  */
 function isMobile (str) {
-    return  /^[1][34578][0-9]{9}$/.test(str);
+    return  /^[1][3-9][0-9]{9}$/.test(str);
 }
 
 /**
