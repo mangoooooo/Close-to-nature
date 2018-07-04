@@ -1,6 +1,6 @@
 /**
  * 查看可视区域窗口的尺寸
-*/
+ */
 function getViewportOffset() {
     if (window.innerWidth) {
         return {
@@ -24,9 +24,9 @@ function getViewportOffset() {
 
 /**
  * 滚动条的滚动距离
-*/
+ */
 function getScrollOffset() {
-    if(window.pageXOffset || window.pageXOffset == 0) {
+    if (window.pageXOffset || window.pageXOffset == 0) {
         return {
             x: window.pageXOffset,
             y: window.pageYOffset,
@@ -41,9 +41,9 @@ function getScrollOffset() {
 
 /**
  * 获得变量类型
-* 1. 分类：原始值、引用值   2. 区分应用值
-* params: (target: 待查询变量)
-*/
+ * 1. 分类：原始值、引用值   2. 区分应用值
+ * params: (target: 待查询变量)
+ */
 function getVarType(target) {
     var ret = typeof(target);
     var template = {
@@ -70,8 +70,8 @@ function getVarType(target) {
 
 /**
  * Array.prototype.sort callback用，用于数字的排序
-* params: (prev: sort回调的第一个参数， next： sort第二个参数，mode： 1-升序(默认) 2-降序)
-*/
+ * params: (prev: sort回调的第一个参数， next： sort第二个参数，mode： 1-升序(默认) 2-降序)
+ */
 function numSort(prev, next, mode) {
     mode = mode || 1; //  mode默认为1
 
@@ -80,10 +80,11 @@ function numSort(prev, next, mode) {
 
 /**
  * 继承：圣杯模式
-* params: (Target: 需要继承者，Origin：继承源)
-*/
+ * params: (Target: 需要继承者，Origin：继承源)
+ */
 function inherit(Target, Origin) {
-    function F() {};
+    function F() {
+    };
     F.prototype = Origin.prototype;
     Target.prototype = new F();
 
@@ -93,18 +94,18 @@ function inherit(Target, Origin) {
 
 /**
  * 返回字符串字节长度
-* params: (str: 字符串)
-*/
+ * params: (str: 字符串)
+ */
 function bytesLength(str) {
     if (!str) {
         return 0;
     }
 
     str += '';
-    var len   = str.length;
+    var len = str.length;
     var count = len;
 
-    for(var i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
         if (str.charCodeAt(i) > 255) {
             count++;
         }
@@ -115,15 +116,15 @@ function bytesLength(str) {
 
 /**
  * trim方法
-*/
+ */
 function trim(text) {
     return text == null ? "" : text.toString().replace(/^\s+|\s+$/, "")
 }
 
 /**
  * 获取计算好的csss属性
-* params：（elem：dom元素，prop： 属性, pseudo： 伪元素）
-*/
+ * params：（elem：dom元素，prop： 属性, pseudo： 伪元素）
+ */
 function getStyle(elem, prop, pseudo) {
     if (window.getComputedStyle) {
         return window.getComputedStyle(elem, pseudo ? pseudo : null)[prop]
@@ -134,8 +135,8 @@ function getStyle(elem, prop, pseudo) {
 
 /**
  * 通过class获取元素列表
- * @param {*父元素} parent 
- * @param {*类名} classname 
+ * @param {*父元素} parent
+ * @param {*类名} classname
  */
 function getEleByClass(parent, classname) {
     if (document.getElementsByClassName) {
@@ -145,14 +146,14 @@ function getEleByClass(parent, classname) {
     var childEle = parent.getElementsByTagName('*');
     var rs = [];
 
-    for (var i = 0, len = childEle.length; i < len; i ++) {
+    for (var i = 0, len = childEle.length; i < len; i++) {
         //  todo: String match
         var classArr = childEle[i].className ? childEle[i].className.split(' ') : 0
         if (!classArr) {
             break;
         }
 
-        for (var j = 0, len2 = classArr.length; j < len2; j++) { 
+        for (var j = 0, len2 = classArr.length; j < len2; j++) {
             if (classname == classArr[j]) {
                 rs.push(childEle[i]);
             }
@@ -164,8 +165,8 @@ function getEleByClass(parent, classname) {
 
 /**
  * 为一个元素绑定多个事件处理函数
-* params: (elem: 元素， type： 事件类型， handle：处理函数)
-*/
+ * params: (elem: 元素， type： 事件类型， handle：处理函数)
+ */
 function addEvent(elem, type, handle, capture) {
     if (elem.addEventListener) {
         elem.addEventListener(type, handle, capture);
@@ -182,7 +183,7 @@ function addEvent(elem, type, handle, capture) {
 
 /**
  * 解除事件绑定
-*/
+ */
 function removeEvent(elem, type, handle) {
     if (elem.removeEventListener) {
         elem.removeEventListener(type, handel, false);
@@ -199,7 +200,7 @@ function removeEvent(elem, type, handle) {
 
 /**
  * 取消冒泡
-*/
+ */
 function stopBubble(event) {
     if (event.stopPropagation) {
         event.stopPropagation();
@@ -210,7 +211,7 @@ function stopBubble(event) {
 
 /**
  * 阻止默认事件
-*/
+ */
 function cancelDefaultHandler(event) {
     if (event.preventDefault) {
         event.preventDefault()
@@ -221,7 +222,7 @@ function cancelDefaultHandler(event) {
 
 /**
  * 拖拽
-*/
+ */
 function drag(elem) {
     var disX,
         disY;
@@ -246,14 +247,14 @@ function drag(elem) {
         var event = e || window.event;
 
         elem.style.left = event.pageX - disX + 'px';
-        elem.style.top  = event.pageY - disY + 'px';
+        elem.style.top = event.pageY - disY + 'px';
     }
 }
 
 /**
  * 异步加载script 并 执行某种操作
-* 使用： loadScript('xxx.js', function () {test()})
-*/
+ * 使用： loadScript('xxx.js', function () {test()})
+ */
 function loadScript(src, callback) {
     var script = document.createElement('script');
     script.type = "text/javascript";
@@ -278,10 +279,10 @@ function loadScript(src, callback) {
 
 /**
  * 将数字按size位用逗号分隔
-*/
+ */
 function splitNum(num, size) {
     var str = num + '';
-    var reg = new RegExp(`(?=(\\B)(\\d{${size}})+$)`,'g');
+    var reg = new RegExp(`(?=(\\B)(\\d{${size}})+$)`, 'g');
 
     return str.replace(reg, ',');
 }
@@ -332,12 +333,12 @@ function deepClone(obj) {
  * @param obj
  * @returns {*}
  */
-function cloneObj (obj) {
+function cloneObj(obj) {
     var str = '';
     var newobj = obj.constructor === Array ? [] : {};
 
     try {
-        str    = JSON.stringify(obj);
+        str = JSON.stringify(obj);
         newobj = JSON.parse(str);
     } catch (err) {
 
@@ -351,7 +352,7 @@ function cloneObj (obj) {
  * @param size
  * @returns {*}
  */
-function getFileSize (size){
+function getFileSize(size) {
     var g = Math.pow(1024, 3);
     var m = Math.pow(1024, 2);
     var k = Math.pow(1024, 1);
@@ -370,16 +371,16 @@ function getFileSize (size){
 }
 
 //判断当前是否是移动端
-function browserRedirect (callback) {
-    var sUserAgent  = navigator.userAgent.toLowerCase();
-    var bIsIpad     = sUserAgent.match(/ipad/i) == "ipad";
+function browserRedirect(callback) {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
     var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-    var bIsMidp     = sUserAgent.match(/midp/i) == "midp";
-    var bIsUc7      = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-    var bIsUc       = sUserAgent.match(/ucweb/i) == "ucweb";
-    var bIsAndroid  = sUserAgent.match(/android/i) == "android";
-    var bIsCE       = sUserAgent.match(/windows ce/i) == "windows ce";
-    var bIsWM       = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
 
     if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
         callback("phone");
@@ -393,7 +394,7 @@ function browserRedirect (callback) {
  * @param str
  * @returns {*}
  */
-function encodeHtmlStr (str) {
+function encodeHtmlStr(str) {
     var replaceRule = [
         {
             symbol: '&',
@@ -454,23 +455,23 @@ function encodeHtmlStr (str) {
  * @param parameter
  * @returns {*}
  */
-function removeURLParameter (url, parameter) {
+function removeURLParameter(url, parameter) {
     //prefer to use l.search if you have a location/link object
-    var urlparts= url.split('?');
-    if (urlparts.length>=2) {
+    var urlparts = url.split('?');
+    if (urlparts.length >= 2) {
 
-        var prefix= encodeURIComponent(parameter)+'=';
-        var pars= urlparts[1].split(/[&;]/g);
+        var prefix = encodeURIComponent(parameter) + '=';
+        var pars = urlparts[1].split(/[&;]/g);
 
         //reverse iteration as may be destructive
-        for (var i= pars.length; i-- > 0;) {
+        for (var i = pars.length; i-- > 0;) {
             //idiom for string.startsWith
             if (pars[i].lastIndexOf(prefix, 0) !== -1) {
                 pars.splice(i, 1);
             }
         }
 
-        url= urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : "");
+        url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : "");
         return url;
     } else {
         return url;
@@ -483,12 +484,12 @@ function removeURLParameter (url, parameter) {
  * @param url
  * @returns {*}
  */
-function getParameterByName (name, url) {
+function getParameterByName(name, url) {
     if (!url) {
         url = window.location.href;
     }
-    name        = name.replace(/[\[\]]/g, "\\$&");
-    var regex   = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
     var results = regex.exec(url);
 
     if (!results) {
@@ -498,4 +499,81 @@ function getParameterByName (name, url) {
         return '';
     }
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+/**
+ * 两数相加方法，解决  0.1 + 0.2 = 0.30000000000000004
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ * link: https://blog.csdn.net/w4bobo/article/details/9143663
+ */
+function accAdd(arg1, arg2) {
+    var r1, r2, m;
+
+    try {
+        r1 = arg1.toString().split(".")[1].length;
+    } catch (e) {
+        r1 = 0;
+    }
+    try {
+        r2 = arg2.toString().split(".")[1].length;
+    } catch (e) {
+        r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+
+    return (arg1 * m + arg2 * m) / m;
+}
+
+/**
+ * 两数相减方法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+function accSub(arg1,arg2){
+    return accAdd(arg1,-arg2);
+}
+
+/**
+ * 两数相乘方法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+function accMul(arg1,arg2) {
+    var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+    try {
+        m += s1.split(".")[1].length
+    } catch (e) {
+    }
+    try {
+        m += s2.split(".")[1].length
+    } catch (e) {
+    }
+    return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+}
+
+/**
+ * 两数相除方法
+ * @param arg1
+ * @param arg2
+ * @returns {number}
+ */
+function accDiv(arg1,arg2) {
+    var t1 = 0, t2 = 0, r1, r2;
+    try {
+        t1 = arg1.toString().split(".")[1].length
+    } catch (e) {
+    }
+    try {
+        t2 = arg2.toString().split(".")[1].length
+    } catch (e) {
+    }
+    with (Math) {
+        r1 = Number(arg1.toString().replace(".", ""))
+        r2 = Number(arg2.toString().replace(".", ""))
+        return (r1 / r2) * pow(10, t2 - t1);
+    }
 }
