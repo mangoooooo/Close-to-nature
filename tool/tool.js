@@ -281,6 +281,10 @@ function loadScript(src, callback) {
  * 将数字按size位用逗号分隔
  */
 function splitNum(num, size) {
+    if (size == 3) {
+        num = parseFloat(num)
+        return num.toLocaleString()
+    }
     var str = num + '';
     var reg = new RegExp(`(?=(\\B)(\\d{${size}})+$)`, 'g');
 
@@ -565,15 +569,13 @@ function accDiv(arg1,arg2) {
     var t1 = 0, t2 = 0, r1, r2;
     try {
         t1 = arg1.toString().split(".")[1].length
-    } catch (e) {
-    }
+    } catch (e) {}
+
     try {
         t2 = arg2.toString().split(".")[1].length
-    } catch (e) {
-    }
-    with (Math) {
-        r1 = Number(arg1.toString().replace(".", ""))
-        r2 = Number(arg2.toString().replace(".", ""))
-        return (r1 / r2) * pow(10, t2 - t1);
-    }
+    } catch (e) {}
+
+    r1 = Number(arg1.toString().replace(".", ""))
+    r2 = Number(arg2.toString().replace(".", ""))
+    return (r1 / r2) * Math.pow(10, t2 - t1);
 }
