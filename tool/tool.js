@@ -454,58 +454,6 @@ function encodeHtmlStr(str) {
 }
 
 /**
- * 移除 url中的某个参数
- * @param url
- * @param parameter
- * @returns {*}
- */
-function removeURLParameter(url, parameter) {
-    //prefer to use l.search if you have a location/link object
-    var urlparts = url.split('?');
-    if (urlparts.length >= 2) {
-
-        var prefix = encodeURIComponent(parameter) + '=';
-        var pars = urlparts[1].split(/[&;]/g);
-
-        //reverse iteration as may be destructive
-        for (var i = pars.length; i-- > 0;) {
-            //idiom for string.startsWith
-            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
-                pars.splice(i, 1);
-            }
-        }
-
-        url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : "");
-        return url;
-    } else {
-        return url;
-    }
-}
-
-/**
- * 获取url中的某个参数
- * @param name
- * @param url
- * @returns {*}
- */
-function getParameterByName(name, url) {
-    if (!url) {
-        url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
-    var results = regex.exec(url);
-
-    if (!results) {
-        return null;
-    }
-    if (!results[2]) {
-        return '';
-    }
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-/**
  * 两数相加方法，解决  0.1 + 0.2 = 0.30000000000000004
  * @param arg1
  * @param arg2
@@ -578,4 +526,60 @@ function accDiv(arg1,arg2) {
     r1 = Number(arg1.toString().replace(".", ""))
     r2 = Number(arg2.toString().replace(".", ""))
     return (r1 / r2) * Math.pow(10, t2 - t1);
+}
+
+/**
+ * url解析
+ * @param url
+ * @returns {{href: string, hash: string, host: string, hostname: string, origin: *|string, pathname: string, port: string, search: string, protocol: string, params}}
+ */
+function parseURL(url) {
+    var a =  document.createElement('a');
+    a.href = url;
+
+    return {
+        href: a.href,
+        hash: a.hash,
+        host: a.host,
+        hostname: a.hostname,
+        origin: a.origin,
+        pathname: a.pathname,
+        port: a.port,
+        search: a.search,
+        protocol: a.protocol,
+        params: (function(){
+            var ret = {},
+                seg = a.search.replace(/^\?/,'').split('&'),
+                len = seg.length, i = 0, s;
+            for (;i<len;i++) {
+                if (!seg[i]) { continue; }
+                s = seg[i].split('=');
+                ret[s[0]] = decodeURIComponent(s[1]);
+            }
+            return ret;
+        })(),
+    }
+}
+
+/**
+ * 移除url中的某个参数
+ * @param url
+ * @param name
+ * @returns {*}
+ */
+function removeURLParameterByName(url, name) {
+    let urlObj = parseURL(url)
+    if (urlObj.params[name] != undefined) {
+        let searchArr = []
+        for (let i in urlObj.params) {
+            if (i != name) {
+                searchArr.push(`${i}=${encodeURIComponent(urlObj.params[i])}`)
+            }
+        }
+        let searchStr = searchArr.length ? '?' + searchArr.join('&') : ''
+
+        return urlObj.origin + urlObj.pathname + searchStr + urlObj.hash
+    }
+
+    return url
 }
