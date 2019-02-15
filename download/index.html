@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="group">
+        <div class="group-title">a标签的download属性</div>
+        <div class="group-body">
+            <a download="drag.html" href="http://localhost:63342/close-to-nature/drag">点击下载html文件</a>
+        </div>
+        <div class="group-footer">服务器资源必须同源</div>
+    </div>
+
+    <div class="group">
+        <div class="group-title">下载blob创建的json文件</div>
+        <div class="group-body">
+            <a download="demo.json" href="" id="blob-download">点击下载json文件</a>
+        </div>
+        <!--<div class="group-footer"></div>-->
+    </div>
+
+    <div class="group">
+        <div class="group-title">下载图片文件</div>
+        <div class="group-body">
+            <button id="img-download">点击下载图片</button>
+        </div>
+        <!--<div class="group-footer"></div>-->
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+</html>

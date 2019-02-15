@@ -1,0 +1,24 @@
+body {
+    background: #f4f4f4;
+}
+
+.group {
+    background: #ffffff;
+    margin-bottom: 20px;
+}
+
+.group-title, .group-body {
+    padding: 12px;
+    border-bottom: 1px solid #dddddd;
+    font-size: 14px;
+}
+
+.group-title {
+    font-size: 15px;
+}
+
+.group-footer {
+    padding: 12px;
+    font-size: 12px;
+    color: #999999;
+}
