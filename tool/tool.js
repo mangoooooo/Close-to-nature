@@ -534,8 +534,13 @@ function accDiv(arg1,arg2) {
  * @returns {{href: string, hash: string, host: string, hostname: string, origin: *|string, pathname: string, port: string, search: string, protocol: string, params}}
  */
 function parseURL(url) {
-    var a =  document.createElement('a');
-    a.href = url;
+    var a;
+    if (typeof window.URL === "function" || (navigator.userAgent.indexOf('MSIE') != -1 && typeof URL === 'object')) {
+        a = new URL(url)
+    } else {
+        a =  document.createElement('a');
+        a.href = url;
+    }
 
     return {
         href: a.href,
